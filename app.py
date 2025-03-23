@@ -15,6 +15,10 @@ st.title("Google Speech-to-Text - FLAC/MP3 Uploader")
 # Inserisci la tua API Key qui oppure usa una variabile d'ambiente
 api_key_input = st.text_input("🔑 Inserisci la tua Google API Key", type="password")
 
+# Salva nell session_state se presente
+if api_key_input:
+    st.session_state["api_key"] = api_key_input
+
 # Upload file
 uploaded_file = st.file_uploader("Carica un file audio (.flac o .mp3)", type=["flac", "mp3"])
 
@@ -56,8 +60,12 @@ if uploaded_file is not None:
     }
 
     if st.button("Invia a Google Speech-to-Text"):
+        api_key = st.session_state.get("api_key", "")
+        if not api_key:
+            st.error("⚠️ Nessuna API Key trovata. Inseriscila nel campo sopra.")
+            st.stop()
         try:
-            url = f"https://speech.googleapis.com/v1/speech:recognize?key={api_key_input}"
+            url = f"https://speech.googleapis.com/v1/speech:recognize?key={api_key}"
             response = requests.post(url, json=request_payload)
             response.raise_for_status()
             result = response.json()
