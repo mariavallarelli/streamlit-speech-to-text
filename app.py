@@ -6,6 +6,10 @@ import os
 from pydub import AudioSegment
 from io import BytesIO
 
+import shutil
+if not shutil.which("ffmpeg"):
+    st.error("❌ FFmpeg non è installato nell'ambiente. Assicurati che `packages.txt` contenga `ffmpeg`.")
+
 st.title("Google Speech-to-Text - FLAC/MP3 Uploader")
 
 # Inserisci la tua API Key qui oppure usa una variabile d'ambiente
