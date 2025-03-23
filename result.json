@@ -1,0 +1,16 @@
+{
+  "results": [
+    {
+      "alternatives": [
+        {
+          "transcript": "how old is the Brooklyn Bridge",
+          "confidence": 0.93510646
+        }
+      ],
+      "resultEndTime": "1.770s",
+      "languageCode": "en-us"
+    }
+  ],
+  "totalBilledTime": "2s",
+  "requestId": "6552119942960939454"
+}
