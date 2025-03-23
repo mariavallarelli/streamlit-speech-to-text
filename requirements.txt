@@ -2,3 +2,4 @@ streamlit
 requests
 pydub
 ffmpeg-python
+python-docx
