@@ -9,7 +9,7 @@ from io import BytesIO
 st.title("Google Speech-to-Text - FLAC/MP3 Uploader")
 
 # Inserisci la tua API Key qui oppure usa una variabile d'ambiente
-API_KEY = os.getenv("GOOGLE_API_KEY") or "xxxx"
+api_key_input = st.text_input("🔑 Inserisci la tua Google API Key", type="password")
 
 # Upload file
 uploaded_file = st.file_uploader("Carica un file audio (.flac o .mp3)", type=["flac", "mp3"])
@@ -53,7 +53,7 @@ if uploaded_file is not None:
 
     if st.button("Invia a Google Speech-to-Text"):
         try:
-            url = f"https://speech.googleapis.com/v1/speech:recognize?key={API_KEY}"
+            url = f"https://speech.googleapis.com/v1/speech:recognize?key={api_key_input}"
             response = requests.post(url, json=request_payload)
             response.raise_for_status()
             result = response.json()
