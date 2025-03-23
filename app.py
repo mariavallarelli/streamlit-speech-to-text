@@ -74,6 +74,13 @@ if uploaded_file is not None:
                 json.dump(result, f, indent=2)
 
             st.success("Risposta ricevuta!")
+            st.download_button(
+            label="💾 Scarica il risultato",
+            data=json.dumps(result, indent=2),
+            file_name="result.json",
+            mime="application/json"
+            )
+            
             st.json(result)
 
         except requests.exceptions.HTTPError as http_err:
@@ -83,12 +90,5 @@ if uploaded_file is not None:
             except:
                 st.text(response.text)
 
-        st.download_button(
-            label="💾 Scarica il risultato",
-            data=json.dumps(result, indent=2),
-            file_name="result.json",
-            mime="application/json"
-        )
         
-        st.json(result)
 
