@@ -5,8 +5,28 @@ import requests
 import os
 from pydub import AudioSegment
 from io import BytesIO
-
 import shutil
+from docx import Document
+
+def crea_docx_da_risposta(risposta_json):
+    doc = Document()
+    doc.add_heading("Trascrizione vocale", level=1)
+
+    # Estrai la trascrizione
+    for result in risposta_json.get("results", []):
+        for alt in result.get("alternatives", []):
+            transcript = alt.get("transcript", "")
+            doc.add_paragraph(transcript)
+
+    # Salva il file temporaneo
+    doc_path = "/tmp/trascrizione.docx"
+    doc.save(doc_path)
+
+    # Riapri e restituisci i byte
+    with open(doc_path, "rb") as f:
+        return f.read()
+
+
 if not shutil.which("ffmpeg"):
     st.error("❌ FFmpeg non è installato nell'ambiente. Assicurati che `packages.txt` contenga `ffmpeg`.")
 
@@ -73,15 +93,18 @@ if uploaded_file is not None:
             with open("result.json", "w") as f:
                 json.dump(result, f, indent=2)
 
+            # Mostra la risposta
             st.success("Risposta ricevuta!")
-            st.download_button(
-            label="💾 Scarica il risultato",
-            data=json.dumps(result, indent=2),
-            file_name="result.json",
-            mime="application/json"
-            )
-            
             st.json(result)
+            
+            # Pulsante per scaricare la trascrizione in formato Word
+            docx_bytes = crea_docx_da_risposta(result)
+            st.download_button(
+                label="💾 Scarica trascrizione in formato Word",
+                data=docx_bytes,
+                file_name="trascrizione.docx",
+                mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            )
 
         except requests.exceptions.HTTPError as http_err:
             st.error(f"Errore nella richiesta: {response.status_code} - {response.reason}")
