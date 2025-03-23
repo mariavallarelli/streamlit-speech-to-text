@@ -82,3 +82,13 @@ if uploaded_file is not None:
                 st.code(response.json(), language="json")
             except:
                 st.text(response.text)
+
+st.download_button(
+    label="💾 Scarica il risultato",
+    data=json.dumps(result, indent=2),
+    file_name="result.json",
+    mime="application/json"
+)
+
+st.json(result)
+
