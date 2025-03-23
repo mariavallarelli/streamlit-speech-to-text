@@ -83,12 +83,12 @@ if uploaded_file is not None:
             except:
                 st.text(response.text)
 
-st.download_button(
-    label="💾 Scarica il risultato",
-    data=json.dumps(result, indent=2),
-    file_name="result.json",
-    mime="application/json"
-)
-
-st.json(result)
+        st.download_button(
+            label="💾 Scarica il risultato",
+            data=json.dumps(result, indent=2),
+            file_name="result.json",
+            mime="application/json"
+        )
+        
+        st.json(result)
 
