@@ -6,10 +6,6 @@ import os
 from pydub import AudioSegment
 from io import BytesIO
 
-AudioSegment.converter = r"c:\users\mvall\appdata\local\programs\python\python39\lib\site-packages"
-audio = AudioSegment.from_file("D:\TIMEFS\test_audio.mp3", format="mp3")
-audio.export("output.flac", format="flac")
-
 st.title("Google Speech-to-Text - FLAC/MP3 Uploader")
 
 # Inserisci la tua API Key qui oppure usa una variabile d'ambiente
